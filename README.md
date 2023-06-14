@@ -1,2 +1,2 @@
 # TheCityAndTheCity
-The City &amp; The City.  Thaught by Hadin Charbel, Joris Putteneers and José Pareja Gómez Check out [OpenAI's website](https://openai.com) for more information.
+The City &amp; The City.  Thaught by [Hadin Charbel](https://pareid.com/) , [Joris Putteneers]([https://pareid.com/](https://putteneersjoris.xyz/)) and [José Pareja Gómez](https://www.zaha-hadid.com/people/jose-pareja-gomez/)
