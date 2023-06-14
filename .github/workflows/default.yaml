@@ -10,12 +10,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: python produce data
-        working-directory: src/
         run: python ./produceData.py
       - name: Deploy to Github Pages
         uses: crazy-max/ghaction-github-pages@v3
         with:
           target_branch: gh-pages
-          build_dir: src
+          build_dir: .
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
