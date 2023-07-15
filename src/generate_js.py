@@ -27,7 +27,7 @@ def remove_unsupported_file(file_path):
         supported_extensions = (".jpg", ".png", ".jpeg", ".txt", ".gif", ".pdf")
         if not file_path.lower().endswith(supported_extensions):
             os.remove(file_path)
-            print(f'{file_path} is not supported and is removed, please use one of the supported extensions {supported_extensions}')
+            print(f'{file_path} is not supported and is removed,  please use one of the supported extensions {supported_extensions}')
 
 def remove_too_big(file_path, maxWidth, maxHeight):
     if os.path.isfile(file_path):
