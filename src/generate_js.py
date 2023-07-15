@@ -35,7 +35,7 @@ def remove_too_big(file_path, maxWidth, maxHeight):
         width, height = imageToProcess.size
 
         if width > maxWidth or height > maxHeight:
-            print("Too big to process")
+            print("Too big to process.")
             os.remove(file_path)
 
 def preProcessImages(item, week_folder_path, nestedDir=None):
