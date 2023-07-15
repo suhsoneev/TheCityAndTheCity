@@ -370,10 +370,11 @@ loadImagesAsync(imageUrls)
 
                             // Set the new content and add the active class to the clicked span
                             const iframe = document.createElement('iframe');
-                            iframe.src = `info/${student}.html`;
+                            iframe.src = `info/${student.replace(/ /g, "_")}.html`; //replace space by underscore so it matches the html files
 
                             infoDiv.innerHTML = '';
                             infoDiv.appendChild(iframe);
+                            console.log(student.replace(/ /g, "_"));
 
                             // Remove the active class and set text decoration to none for all spans
                             for (let i = 0; i < spans.length; i++) {

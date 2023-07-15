@@ -27,7 +27,7 @@ def remove_unsupported_file(file_path):
         supported_extensions = (".jpg", ".png", ".jpeg", ".txt", ".gif", ".pdf")
         if not file_path.lower().endswith(supported_extensions):
             os.remove(file_path)
-            print(f'{file_path} is not supported and is removed,  please use one of the supported extensions {supported_extensions}')
+            print(f'{file_path} is not supported and is removed, please use one of the supported extensions {supported_extensions}')
 
 def remove_too_big(file_path, maxWidth, maxHeight):
     if os.path.isfile(file_path):
@@ -46,26 +46,25 @@ def preProcessImages(item, week_folder_path, nestedDir=None):
 
             processed_dir = os.path.join(week_folder_path, "processed")
             optionalArgs = ""
-            resizeArg = "-resize 512x "
+            resizeArg = "-resize 512x512 "
             print(f"processing {item}")    
 
             if nestedDir != None:
                 print("nested directory -images- is activated")
                 processed_dir = os.path.join(nestedDir, "processed")
-                optionalArgs = "-fuzz 20% -transparent white -negate "
+                optionalArgs = "-fuzz 20% -transparent white  "  #-negate
                 
             # if filename contains "long" in filename, set resize to 512x512
             if "long" in os.path.splitext(item)[0]:
                 resizeArg = "-resize x512 "
                 print("contains long")
             
-            
             os.makedirs(processed_dir, exist_ok=True)
-            saveImg = os.path.splitext(item)[0] + "_pr.png"
+            saveImg = os.path.splitext(item)[0] + "_pr." + os.path.splitext(item)[1] #save img with given extension
             processed_path = os.path.join(processed_dir, saveImg)
 
             remove_too_big(item_path, 10000, 10000)
-            os.system(f'convert "{item_path}" {resizeArg} -interpolate nearest-neighbor -sharpen 0x1 -quality 90 {optionalArgs} "{processed_path}"')
+            os.system(f'convert "{item_path}" {resizeArg} -interpolate nearest-neighbor -sharpen 0x2 -quality 50 {optionalArgs} "{processed_path}"')
 
             
             resize_file_if_large(item_path, 1000000) #1mb max, for uploading mainly
@@ -108,6 +107,7 @@ def preProcessText(item, week_folder_path, nestedDir=None):
 
             modified_content = re.sub(r'<iframe\b[^>]*>.*?</iframe>', '', content, flags=re.DOTALL)
             modified_content = f'<span foreground="{textColor}">' + modified_content + "</span>\n"
+            modified_content = modified_content.replace("&", "and")
 
             with open(processedTextForImg, "w") as new_file:
                 new_file.write(modified_content)
@@ -245,8 +245,9 @@ def generate_html_file(filename, title, groupContent, weeks, content, images, gr
                     if file_extension.strip().lower() == ".txt":
                         with open(file_path, 'r') as groupFile:
                             text_content = groupFile.read()
+                            
         
-                        
+        
         file.write(f"<p>{text_content}</p>\n")
 
         for week, week_content, week_images in zip(weeks, content, images):
@@ -256,7 +257,7 @@ def generate_html_file(filename, title, groupContent, weeks, content, images, gr
             file.write("<div>\n")
             for text_item in week_content:
                 with open(text_item, 'r') as text_file:
-                    content = text_file.read()
+                    content = text_file.read().replace('\n', '<br>')     
                     file.write(f"<p>{content}</p>\n")
             file.write("</div>\n")
             
@@ -397,7 +398,7 @@ for group in sorted(os.listdir("content")):
                         imgArray.append(images)
     
 
-                        os.system(f"""convert -background none -size 256x256 -pointsize 20 -define pango:justify=true  pango:"<span foreground=\\"white\\">content: {week_folder}</span> " ./{additional_folder_path}/ref_{week_folder}.png""")
+                        os.system(f"""convert -background none -size 256x256 -pointsize 20 -define pango:justify=true  pango:"<span foreground=\\"gray\\">content: {week_folder}</span> " ./{additional_folder_path}/ref_{week_folder}.png""")
                         week.append(f'./{additional_folder_path}/ref_{week_folder}.png')
                         weeks.append(week)
 
