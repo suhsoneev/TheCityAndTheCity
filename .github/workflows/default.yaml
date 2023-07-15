@@ -21,6 +21,9 @@ jobs:
       - name: Install pdf2image
         run: |
           python -m pip install pdf2image
+      - name: Install PIL
+        run: |
+          python -m pip install Pillow
       - name: Set up ImageMagick
         run: |
           sudo apt-get update
