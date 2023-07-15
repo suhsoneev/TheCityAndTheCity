@@ -7,6 +7,7 @@ import re
 import subprocess
 from pdf2image import convert_from_path
 import math
+from PIL import Image
 
 # preprocessing functions
 
@@ -15,7 +16,7 @@ def resize_file_if_large(filePath, maxBytes): #100 000 000 bytes is 100mb
     if file_size > maxBytes:
         print(f"{filePath} is too big with {file_size}bytes. It will be modified. Max bytes is {maxBytes}")
         command = f'convert "{filePath}" -resize 512x -quality 80 "{filePath}"'
-        print(os.path.splitext(filePath)[1])
+        # print(os.path.splitext(filePath)[1])
         if os.path.splitext(filePath)[1] == ".gif": #check if gif
             command = f'convert "{filePath}" -coalesce -resize 512x -colors 64 -deconstruct "{filePath}"'
 
@@ -28,22 +29,32 @@ def remove_unsupported_file(file_path):
             os.remove(file_path)
             print(f'{file_path} is not supported and is removed, please use one of the supported extensions {supported_extensions}')
 
+def remove_too_big(file_path, maxWidth, maxHeight):
+    if os.path.isfile(file_path):
+        imageToProcess = Image.open(file_path)
+        width, height = imageToProcess.size
+
+        if width > maxWidth or height > maxHeight:
+            print("Too big to process.")
+            os.remove(file_path)
+
 def preProcessImages(item, week_folder_path, nestedDir=None):
     item_path = os.path.join(week_folder_path, item)   
     if os.path.isfile(item_path):
         if item_path.lower().endswith((".jpg", ".png", ".jpeg")):
 
+
             processed_dir = os.path.join(week_folder_path, "processed")
             optionalArgs = ""
             resizeArg = "-resize 512x "
+            print(f"processing {item}")    
 
             if nestedDir != None:
                 print("nested directory -images- is activated")
                 processed_dir = os.path.join(nestedDir, "processed")
-                optionalArgs = "-negate"
+                optionalArgs = "-fuzz 20% -transparent white -negate "
                 
             # if filename contains "long" in filename, set resize to 512x512
-            print(os.path.splitext(item)[0])
             if "long" in os.path.splitext(item)[0]:
                 resizeArg = "-resize x512 "
                 print("contains long")
@@ -52,9 +63,11 @@ def preProcessImages(item, week_folder_path, nestedDir=None):
             os.makedirs(processed_dir, exist_ok=True)
             saveImg = os.path.splitext(item)[0] + "_pr.png"
             processed_path = os.path.join(processed_dir, saveImg)
-            os.system(f'convert "{item_path}" {resizeArg} -interpolate nearest-neighbor -sharpen 0x1 {optionalArgs} "{processed_path}"')
 
+            remove_too_big(item_path, 10000, 10000)
+            os.system(f'convert "{item_path}" {resizeArg} -interpolate nearest-neighbor -sharpen 0x1 -quality 90 {optionalArgs} "{processed_path}"')
 
+            
             resize_file_if_large(item_path, 1000000) #1mb max, for uploading mainly
 
             images.append("../" + processed_path) #save normal pdfs so it diplays in info

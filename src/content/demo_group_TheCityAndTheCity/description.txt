@@ -1,2 +1,2 @@
-this is our newly created group with our first github commot !
+this is our newly created group with our first github commit !
 
