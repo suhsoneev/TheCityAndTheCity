@@ -60,7 +60,7 @@ def preProcessImages(item, week_folder_path, nestedDir=None):
                 print("contains long")
             
             os.makedirs(processed_dir, exist_ok=True)
-            saveImg = os.path.splitext(item)[0] + "_pr." + os.path.splitext(item)[1] #save img with given extension
+            saveImg = os.path.splitext(item)[0] + "_pr" + os.path.splitext(item)[1] #save img with given extension
             processed_path = os.path.join(processed_dir, saveImg)
 
             remove_too_big(item_path, 10000, 10000)
