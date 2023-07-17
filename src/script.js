@@ -106,7 +106,7 @@ function loadImagesAsync(imageUrls) {
                 }
                 
                 // let loadingAnimationContent =  '<img id="loading" src="loading.gif"></img>' 
-                screenDiv.innerHTML ='building city <br>' + (loadedCount-1) + '/' + (allImageUrls-1)  + '<br>' +screenDivContent 
+                screenDiv.innerHTML ='building city <br>' + (loadedCount-1) + '/' + (allImageUrls-1)  + '<br>' +screenDivContent + '<br>' + ((loadedCount-1)/(allImageUrls-1)*100) + '%'
 
                 if (loadedCount === allImageUrls) {
                     resolve(loadedTextures);
@@ -265,13 +265,10 @@ loadImagesAsync(imageUrls)
                 span.style.left = ((planeScreenPosition.x + 1) / 2) * window.innerWidth + 'px';
                 span.style.top = ((-planeScreenPosition.y + 1) / 2) * window.innerHeight + 'px';
                 
-                // if((((planeScreenPosition.x + 1) / 2) * window.innerWidth) < 200 ){
-                //     span.style.display = "none"
-                // }
 
 
-                const countSpan = document.createElement("span");
-                // console.log(student);
+                const countSpan = document.createElement("code");
+
 
                 span.textContent = student;
 
@@ -346,8 +343,9 @@ loadImagesAsync(imageUrls)
                         var isBoundingBoxVisible = false;
 
                         const infoDiv = document.getElementById('info');
-                        const spans = document.getElementsByTagName('span');
-
+                        const spans = document.getElementsByTagName('span'); 
+                        // document.querySelectorAll("#test");
+                        
                         // Check if the clicked span is already active
                         if (this.classList.contains('active')) {
                             // Revert back to the original content
@@ -357,7 +355,14 @@ loadImagesAsync(imageUrls)
                             for (let k = 0; k < spans.length; k++) {
                                 spans[k].classList.remove('active');
                                 spans[k].style.textDecoration = 'none';
-                                spans[k].style.color = spanColor
+                                spans[k].style.color = 'white';
+
+                                
+
+                                
+                           
+    
+
                             }
 
 
@@ -374,19 +379,28 @@ loadImagesAsync(imageUrls)
 
                             infoDiv.innerHTML = '';
                             infoDiv.appendChild(iframe);
-                            console.log(student.replace(/ /g, "_"));
+
 
                             // Remove the active class and set text decoration to none for all spans
                             for (let i = 0; i < spans.length; i++) {
                                 spans[i].classList.remove('active');
                                 spans[i].style.textDecoration = 'none';
-                                spans[i].style.color = spanColor;
+                                spans[i].style.color = spanColor
+                                // spans[i].style.color = 'white';
+                                // spans[i].style.backgroundColor = "rgba(255,255,255,0.01)"
+                                // spans[i].style.backdropFilter = "unset"
+
                             }
 
                             // Add the active class and set text decoration to underline for the clicked span
                             this.classList.add('active');
                             this.style.textDecoration = 'underline';
                             this.style.color = 'white';
+                            this.style.padding = '5px'
+                            this.style.borderRadius = '5px '
+                            this.style.backgroundColor = "rgba(255,255,255,0.01)"
+                            this.style.backdropFilter = "blur(20px)"
+                            
 
 
                             
@@ -477,7 +491,7 @@ function animate() {
 
 
                 // if tags are outside of window, delete
-                if((((planeScreenPosition.x + 1) / 2) * window.innerWidth) > window.innerWidth-50 || (((-planeScreenPosition.y + 1) / 2) * window.innerHeight) < window.innerHeight* 0.1 || ((planeScreenPosition.x + 1) / 2) * window.innerWidth < 0 || ((-planeScreenPosition.y + 1) / 2) > 1.08){
+                if((((planeScreenPosition.x + 1) / 2) * window.innerWidth) > window.innerWidth-100 || (((-planeScreenPosition.y + 1) / 2) * window.innerHeight) < window.innerHeight* 0.01 || ((planeScreenPosition.x + 1) / 2) * window.innerWidth < 0 || ((-planeScreenPosition.y + 1) / 2) > 0.95){
                     tag.style.display = "none"
 
                     // if spanes go outside bottom and left, also deletre
@@ -495,20 +509,25 @@ function animate() {
     renderer.render(scene, camera);
 }
 
+const info = document.getElementById("info");
 for (var group in groups) {
-    const info = document.getElementById("info");
     var groupButton = document.createElement("button");
-    groupButton.innerHTML = group;
+    groupButton.innerHTML = group ;
     groupButton.classList.add("group-button");
-    groupButton.style.fontSize = '1em';
+    groupButton.style.backgroundColor = "rgba(0,0,0,0)"
+
+    groupButton.style.fontSize = '12px';
+    // groupButton.style.backdropFilter = "blur(5px)";
+    // groupButton.style.backgroundColor = "blur(5px)";
+
+    // groupButton.style.backgroundColor = 'rgba(01,200,50,0.5)';
+    // groupButton.style.margin = '1px';
+    // groupButton.style.border = 'border 1px; red, solid'
+    // backdrop-filter: blur(5px);
+    
+    var newLine = document.createElement("br");
 
     groupButton.addEventListener("click", function() {
-        // Remove underline from all buttons
-        // loadingDiv.style.display = "block"
-        // screenDiv.style.display = "block"
-        
-
-
         var buttons = document.getElementsByClassName("group-button");
         for (var i = 0; i < buttons.length; i++) {
             buttons[i].style.textDecoration = "none";
@@ -516,6 +535,7 @@ for (var group in groups) {
 
         // Add underline to the clicked button
         this.style.textDecoration = "underline";
+        
         // this.style.fontWeight = 'bold';
 
         var selectedGroup = this.innerHTML;
@@ -534,12 +554,14 @@ for (var group in groups) {
     // Check if the current button is "theCityAndtheCity" and underline it on startup
     if (group === projectName) {
         groupButton.style.textDecoration = "underline";
-        groupButton.style.fontWeight = "bold";
-        groupButton.style.fontSize = '2em';
+        // groupButton.style.fontWeight = "bold";
+        // groupButton.style.fontSize = '2em';
+        // groupButton.style.color = 'red';
     }
 
     
     headerDiv.appendChild(groupButton);
+    headerDiv.appendChild(newLine);
 }
 
 
