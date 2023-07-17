@@ -606,5 +606,3 @@ createStacksOfPlanes(randomGroup);
 
 animate();
 window.addEventListener('resize', onWindowResize);
-
-
