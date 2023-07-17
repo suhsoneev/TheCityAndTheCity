@@ -21,7 +21,7 @@ a:visited{color: rgb(255,255,255); }
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: #f80000 #000000;
+    scrollbar-color: #000000 #000000;
   }
 
 .textInfo{color: var(--font-color);}
