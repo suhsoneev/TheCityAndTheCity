@@ -166,6 +166,7 @@ loadImagesAsync(imageUrls)
     var offsetZ = (Math.ceil(stackCount / gridWidth) - 1) * stackDistance * 0.5;
 
     for (var i = 0; i < stackCount; i++) {
+        // scene.add(new THREE.GridHelper(4, 4));// Create a grid helper
 
         var x = i % gridWidth;
         var z = Math.floor(i / gridWidth);
@@ -197,7 +198,7 @@ loadImagesAsync(imageUrls)
                     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                     texture.repeat.set(1, 1 / totalFrames);
 
-                    var frameDuration = 100; // Adjust as needed
+                    var frameDuration = 200; // Adjust as needed
                     var currentFrame = 0;
                     var frameTimer = setInterval(function() {
                         currentFrame = (currentFrame + 1) % totalFrames;
@@ -235,6 +236,7 @@ loadImagesAsync(imageUrls)
             plane.rotation.y = Math.PI; // Turn 180 so facing top
             plane.rotation.z = Math.PI ;
             scene.add(plane);
+            
             
 
             boundingBox.position.set(posX, j/2 * planeHeight, posZ);
