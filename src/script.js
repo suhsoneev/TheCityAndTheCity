@@ -277,8 +277,9 @@ loadImagesAsync(imageUrls)
 
                 countSpan.textContent = " ";
                 countSpan.textContent += itemCount - 1;
-                // const emojis = ['😢', '😞', '🤢', '🙁', '😐', '😌', '😊', '🙂', '😄', '😃', '😍', '😀', '🌧️', '⛅️', '🌦️', '🌞', '🌺', '🌸', '🌼', '🌈', '🎵', '🎶', '💔', '💩', '🚫', '🔥', '🤕', '🤮', '👎', '👿', '🧟', '😎', '😇', '🥰', '🥳', '🎉', '🎈', '🎁', '🍔', '🍕', '🍦', '🍩', '🍓', '🥗', '🏖️', '🌴', '🏞️', '🚀', '⭐️', '💖', '💯', '✨'];
-                // countSpan.textContent += ") " + emojis[Math.min(itemCount, emojis.length-1)];
+                
+                const emojis = ['😢', '😞', '🤢', '🙁', '😐', '😌', '😊', '🙂', '😄', '😃', '😍', '😀', '🌧️', '⛅️', '🌦️', '🌞', '🌺', '🌸', '🌼', '🌈', '🎵', '🎶', '💔', '💩', '🚫', '🔥', '🤕', '🤮', '👎', '👿', '🧟', '😎', '😇', '🥰', '🥳', '🎉', '🎈', '🎁', '🍔', '🍕', '🍦', '🍩', '🍓', '🥗', '🏖️', '🌴', '🏞️', '🚀', '⭐️', '💖', '💯', '✨'];
+                countSpan.textContent += " " + emojis[Math.min(itemCount, emojis.length-1)];
                 // console.log(Math.min(itemCount, emojis.length))
 
  
@@ -400,8 +401,8 @@ loadImagesAsync(imageUrls)
                             this.style.color = 'white';
                             this.style.padding = '5px'
                             this.style.borderRadius = '5px '
-                            this.style.backgroundColor = "rgba(255,255,255,0.01)"
-                            this.style.backdropFilter = "blur(20px)"
+                            // this.style.backgroundColor = "rgba(255,255,255,0.01)"
+                            // this.style.backdropFilter = "blur(20px)"
                             
 
 
