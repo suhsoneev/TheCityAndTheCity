@@ -1,4 +1,4 @@
-please upload here any images, gifs, pdf's and text files you researched/made.
+please upload here any work you made yourself
 supported fileformats are ('.jpg', '.png', '.jpeg', '.gif', '.pdf', '.txt')
 youtube videos can be embedded in a .txt file an an embedded youtube link.
 
