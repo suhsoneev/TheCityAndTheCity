@@ -47,7 +47,7 @@ def preProcessImages(item, week_folder_path, nestedDir=None):
 
 
             processed_dir = os.path.join(week_folder_path, "processed")
-            optionalArgs = ""
+            optionalArgs = "-fuzz 10% -transparent white"
             resizeArg = "-resize 512x512 "
             print(f"processing {item}")    
 
@@ -62,7 +62,8 @@ def preProcessImages(item, week_folder_path, nestedDir=None):
                 print("contains long")
             
             os.makedirs(processed_dir, exist_ok=True)
-            saveImg = os.path.splitext(item)[0] + "_pr" + os.path.splitext(item)[1] #save img with given extension
+            # saveImg = os.path.splitext(item)[0] + "_pr" + os.path.splitext(item)[1] #save img with given extension
+            saveImg = os.path.splitext(item)[0] + "_pr.png" #save img with given extension
             processed_path = os.path.join(processed_dir, saveImg)
 
             remove_too_big(item_path, 10000, 10000)
@@ -121,7 +122,7 @@ def preProcessText(item, week_folder_path, nestedDir=None):
                 print(f'{item} -> text file written')
 
             
-            os.system(f'convert -background none -size 512x -pointsize 20 -define pango:justify=true pango:@"{processedTextForImg}" "{processed_path}"')
+            os.system(f'convert -background none -size 512x512 -pointsize 20 -define pango:justify=true pango:@"{processedTextForImg}" "{processed_path}"')
             os.remove(processedTextForImg)
             text.append(processedTextForHTML)
             week.append(processed_path)
@@ -172,7 +173,7 @@ def preProcessGifs(item, week_folder_path, nestedDir=None):
             processed_dir = os.path.join(week_folder_path, "processed")
 
             resize_file_if_large(item_path, 1000000) #1mb max, for uploading mainly
-            
+
             optionalArgs = ''
             if nestedDir != None:
                 print("nested directory -gif- is activated")
@@ -402,7 +403,7 @@ for group in sorted(os.listdir("content")):
                         imgArray.append(images)
     
 
-                        os.system(f"""convert -background none -size 256x256 -pointsize 20 -define pango:justify=true  pango:"<span foreground=\\"gray\\">content: {week_folder}</span> " ./{additional_folder_path}/ref_{week_folder}.png""")
+                        os.system(f"""convert -background none -size 512x512 -pointsize 20 -define pango:justify=true  pango:"<span foreground=\\"white\\">content: {week_folder}</span> " ./{additional_folder_path}/ref_{week_folder}.png""")
                         week.append(f'./{additional_folder_path}/ref_{week_folder}.png')
                         weeks.append(week)
 
