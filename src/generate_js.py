@@ -178,7 +178,7 @@ def preProcessGifs(item, week_folder_path, nestedDir=None):
             if nestedDir != None:
                 print("nested directory -gif- is activated")
                 processed_dir = os.path.join(nestedDir, "processed")
-                optionalArgs = "-negate"
+                optionalArgs = " -fuzz 10% -transparent black"
 
             os.makedirs(processed_dir, exist_ok=True)
 
@@ -216,7 +216,7 @@ def preProcessGifs(item, week_folder_path, nestedDir=None):
 
                 #  make the gif resize and save it
                 processed_path_gif = os.path.join(processed_dir, f'{item}_preProcessed.gif')
-                os.system(f'convert "{item_path}" -coalesce -resize 512x -colors 32 -deconstruct {optionalArgs} "{processed_path_gif}"')
+                os.system(f'convert "{item_path}" -coalesce -resize 512x -colors 32 -deconstruct -loop 0  {optionalArgs} "{processed_path_gif}"')
 
 
                 images.append("../" + processed_path_gif) #save normal pdfs so it diplays in info
